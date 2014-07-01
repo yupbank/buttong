@@ -32,7 +32,7 @@ class IndexHandler(tornado.web.RequestHandler):
 application = tornado.web.Application([
     (r"/wechat", WechatHandler),
     (r"/i", IndexHandler),
-    (r"/", IndexHandler)),
+    (r"/", IndexHandler),
     #(r"/", tornado.web.RedirectHandler, dict(url="http://yupbank.org")),
 ], debug=True)
 
