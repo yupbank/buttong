@@ -27,7 +27,7 @@ class WechatHandler(tornado.web.RequestHandler):
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write('<h1>welcome</h1><br/>')
+        self.write('<h1>welcome</h1><br/>follow <img src="http://ww1.sinaimg.cn/large/5e0eccddgw1ehxkdy776wj20zk0zktct.jpg"/>')
 
 application = tornado.web.Application([
     (r"/wechat", WechatHandler),

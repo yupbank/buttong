@@ -28,8 +28,9 @@ def valid(signature, timestamp, nonce):
 def processXml(xml):
 
     help = u'''使用指南:
-1 查询bus 000001
-2 查询外卖 a000001
+1 查询bus: busxx
+2 查询外卖 wamaixx
+其实现在只能重复你的消息
 '''
 #5 <a href="https://me.alipay.com/zhu327">点击赞助</a>
 
@@ -45,8 +46,9 @@ def processXml(xml):
             return None
     elif xdict['MsgType'] == 'text':
         t = xdict['Content']
-        print t
         text = t
+        if text.lower() == 'help':
+            text = help
     else:
         # 返回帮助信息
         text = help
