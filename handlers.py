@@ -28,18 +28,16 @@ def valid(signature, timestamp, nonce):
 def processXml(xml):
 
     help = u'''使用指南:
-1 查询净值 000001
-2 基金订阅 a000001
-3 查询订阅 c
-4 取消订阅 r000001
-5 <a href="https://me.alipay.com/zhu327">点击赞助</a>
+1 查询bus 000001
+2 查询外卖 a000001
 '''
+#5 <a href="https://me.alipay.com/zhu327">点击赞助</a>
 
     xdict = toDict(xml)
     if xdict['MsgType'] == 'event':
         if xdict['Event'] == 'subscribe':
             # 返回欢迎订阅，与帮助信息
-            text = u"欢迎订阅基金查查"
+            text = u"欢迎订阅Bus通"
             text = '\n'.join([text, help])
         elif xdict['Event'] == 'unsubscribe':
             #db = SaeDb(xdict['FromUserName'])
