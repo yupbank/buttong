@@ -8,7 +8,7 @@ except ImportError:
     
 def toDict(xml):
     root = ET.fromstring(xml)
-    return dict([ (x.tag, x.text) for x in root.iter() if x.tag != 'xml' ])
+    return dict([ (x.tag, x.text) for x in root.findall('*') if x.tag != 'xml' ])
     
 def toXml(kw):
     s = """<xml>
