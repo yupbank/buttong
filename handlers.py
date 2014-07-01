@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
 import time
-from jsquery import query, queryAny
 from wxml import toDict, toXml
 #from saedb import SaeDb
 from hashlib import sha1
