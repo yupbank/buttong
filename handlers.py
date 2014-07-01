@@ -28,6 +28,7 @@ def valid(signature, timestamp, nonce):
 def processXml(xml):
 
     help = u'''使用指南:
+0 help: for manual
 1 查询bus: busxx
 2 查询外卖 wamaixx
 其实现在只能重复你的消息
@@ -47,6 +48,7 @@ def processXml(xml):
     elif xdict['MsgType'] == 'text':
         t = xdict['Content']
         text = t
+    	print xdict['FromUserName'], 'to', xdict['ToUserName'], 'says', text
         if text.lower() == 'help':
             text = help
     else:
