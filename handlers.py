@@ -48,7 +48,7 @@ def processXml(xml):
     elif xdict['MsgType'] == 'text':
         t = xdict['Content']
         text = t
-    	print xdict['FromUserName'], 'to', xdict['ToUserName'], 'says', text
+    	print xdict['FromUserName'], 'to', xdict['ToUserName'], 'says', text.encode('U8', 'ignore')
         if text.lower() == 'help':
             text = help
     else:
