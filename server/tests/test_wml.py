@@ -13,4 +13,5 @@ from framework import BaseTestCase
 
 class TestWml(BaseTestCase):
     def test_process(self):
+        pass
         
