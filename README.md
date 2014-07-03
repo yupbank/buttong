@@ -1,7 +1,7 @@
 ##Bus Tong 代码
 
 ###status
-[![Build Status](https://travis-ci.org/yupbank/buttong.png)](https://travis-ci.org/yupbank/buttong)
+[![Build Status](https://travis-ci.org/yupbank/buttong.svg?branch=master)](https://travis-ci.org/yupbank/buttong)
 
 ###To Do
 
