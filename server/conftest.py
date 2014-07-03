@@ -9,10 +9,10 @@ Created on
 2014-07-03
 '''
 import time
-
 import pytest
 
-from wxml import toDict, toXml
+from .util import valid
+from .ctrl import router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text
 
 @pytest.fixture(scope="module", params=['text', 'event'])
 def xml(request):
