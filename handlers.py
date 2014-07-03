@@ -25,22 +25,19 @@ def valid(signature, timestamp, nonce):
         else:
             return False
     
-def processXml(xml):
-
-    help = u'''使用指南:
+help_message = u'''使用指南:
 0 help: for manual
 1 查询bus: busxx
 2 查询外卖 wamaixx
 其实现在只能重复你的消息
 '''
-#5 <a href="https://me.alipay.com/zhu327">点击赞助</a>
-
+def processXml(xml):
     xdict = toDict(xml)
     if xdict['MsgType'] == 'event':
         if xdict['Event'] == 'subscribe':
             # 返回欢迎订阅，与帮助信息
             text = u"欢迎订阅Bus通"
-            text = '\n'.join([text, help])
+            text = '\n'.join([text, help_message])
         elif xdict['Event'] == 'unsubscribe':
             #db = SaeDb(xdict['FromUserName'])
             #db.delete()
@@ -50,10 +47,10 @@ def processXml(xml):
         text = t
     	print xdict['FromUserName'], 'to', xdict['ToUserName'], 'says', text.encode('U8', 'ignore')
         if text.lower() == 'help':
-            text = help
+            text = help_message
     else:
         # 返回帮助信息
-        text = help
+        text = help_message
     kw = dict.fromkeys(['ToUserName', 'FromUserName', 'CreateTime', 'Content'])
     kw['ToUserName'] = xdict['FromUserName']
     kw['FromUserName'] = xdict['ToUserName']
