@@ -8,9 +8,10 @@ Email:  yupbank@gmail.com
 Created on
 2014-07-03
 '''
-import time
+from functools import partial
+
 from settings import help_message, welcome_message
-from util import toXml, toDict
+from util import form_message, toDict
 from search import suggestion
 
 def is_event(message_type):
@@ -54,15 +55,15 @@ def router(xdict, callback):
         if is_help(text):
             return_message = help_message
         elif is_query(text):
-            query(text, callback)
+            query(text, xdict, callback)
             return None
         else:
             return_message = text
     return return_message
 
-def query(text, callback):
+def query(text, xdict, callback):
     query_text = text.strip('q:')
-    suggestion(query_text, callback)
+    suggestion(query_text, partial(callback, xdict))
 
 def subscribe(xdict):
     message = welcome_message+'\n'+help_message 
@@ -74,10 +75,5 @@ def unsubscribe(xdict):
 def return_back(xdict, callback):
     return_message = router(xdict, callback)
     if return_message:
-        kw = dict.fromkeys(['ToUserName', 'FromUserName', 'CreateTime', 'Content'])
-        kw['ToUserName'] = xdict['FromUserName']
-        kw['FromUserName'] = xdict['ToUserName']
-        kw['CreateTime'] = int(time.time())
-        kw['Content'] = return_message
-        return toXml(kw)
+        return form_message(xdict, return_message)
 

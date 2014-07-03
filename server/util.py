@@ -8,6 +8,7 @@ Email:  yupbank@gmail.com
 Created on
 2014-07-03
 '''
+import time
 from hashlib import sha1
 import string
 from zh_wiki import zh2Hant, zh2Hans
@@ -45,4 +46,12 @@ def toDict(xml):
 def toXml(kw):
     st = string.Template(XMLTEMPLATE)
     return st.substitute(kw)
+
+def form_message(xdict, message):
+    kw = dict.fromkeys(['ToUserName', 'FromUserName', 'CreateTime', 'Content'])
+    kw['ToUserName'] = xdict['FromUserName']
+    kw['FromUserName'] = xdict['ToUserName']
+    kw['CreateTime'] = int(time.time())
+    kw['Content'] = return_message
+    return toXml(kw)
 

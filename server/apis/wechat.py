@@ -9,7 +9,7 @@ Created on
 2014-07-03
 '''
 from .base import ApiHandler
-from util import valid, toDict
+from util import valid, toDict, form_message
 from ctrl import return_back
 import tornado.web
 
@@ -35,5 +35,6 @@ class WechatHandler(ApiHandler):
         if message:
             return self.finish(message)
 
-    def callback(self, message):
+    def callback(self, xdict, message):
+        form_message(xdict, message)
         return self.finish(message)
