@@ -1,35 +1,10 @@
 # -*- coding:utf-8 -*-
 
 import time
-from wxml import toDict, toXml
-from hashlib import sha1
-
-TOKEN = 'bustong2014' # 微信公众号 TOKEN
-
-def valid(signature, timestamp, nonce):
-        li = []
-
-        li.append(TOKEN)
-        li.append(nonce)
-        li.append(timestamp)
-
-        li.sort()
-
-        tmpWord = ''.join(li)
-        tmpWord = sha1(tmpWord).hexdigest()
+import tornado.web
 
 
-        if tmpWord == signature:
-            return True
-        else:
-            return False
     
-help_message = u'''使用指南:
-0 help: for manual
-1 查询bus: busxx
-2 查询外卖 wamaixx
-其实现在只能重复你的消息
-'''
 def processXml(xml):
     xdict = toDict(xml)
     if xdict['MsgType'] == 'event':

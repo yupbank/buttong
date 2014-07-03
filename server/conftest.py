@@ -14,25 +14,31 @@ import pytest
 
 from wxml import toDict, toXml
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="module", params=['text', 'event'])
 def xml(request):
     s = """<xml>
     <ToUserName><![CDATA[rec]]></ToUserName>
     <FromUserName><![CDATA[sender]]></FromUserName>
     <CreateTime>1232322</CreateTime>
-    <MsgType><![CDATA[text]]></MsgType>
+    <MsgType><![CDATA[%s]]></MsgType>
     <Content><![CDATA[how are you]]></Content>
-    </xml>"""
+    </xml>"""%request.param
     return s
 
 
-@pytest.fixture(scope="module")
-def Dict(request):
+
+@pytest.fixture(scope="function", params=['text', 'event'])
+def message(request):
     message = {
             'ToUserName': 'rec',
             'FromUserName': 'sender',
             'CreateTime':1232322,
             'Content':'how are you',
-            'MsgType':'text',
+            'MsgType': request.param,
             }
-    return message
+    return message, request.param
+
+
+
+
+    
