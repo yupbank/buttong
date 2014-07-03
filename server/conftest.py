@@ -13,6 +13,7 @@ import pytest
 
 from .util import valid
 from .ctrl import router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text
+from .app import application
 
 @pytest.fixture(scope="module", params=['text', 'event'])
 def xml(request):
