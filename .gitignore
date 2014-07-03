@@ -1,0 +1,5 @@
+*.pyc
+*.sw[op]
+.ropeproject
+*.un~
+local_config.py
