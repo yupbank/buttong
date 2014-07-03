@@ -10,8 +10,13 @@ Created on
 '''
 import pytest
 from framework import BaseTestCase
+from wxml import toDict, toXml
 
 class TestWml(BaseTestCase):
-    def test_process(self):
-        pass
+    def test_todict(self, xml, Dict):
+        a = toDict(xml)
+        for i in a:
+            assert i in Dict
+
+
         
