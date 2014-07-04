@@ -53,5 +53,5 @@ class WechatHandler(ApiHandler):
             return self.finish('not valid')
 
     def callback(self, xdict, message):
-        new_message = form_message(xdict, json.loads(message.body)['data'][0]['suggestion'])
+        new_message = form_message(xdict, json.loads(message.body)['data'][0])
         return self.finish(new_message)
