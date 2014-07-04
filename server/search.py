@@ -24,7 +24,7 @@ def query_search(url, callback, request_timeout=5, **kwargs):
         url += '?uid=888'
     else:
         url += '&uid=888'
-    print API_BASE+url, '!!!!!'
+    print [API_BASE+url], '!!!!!'
     http_worker.fetch(API_BASE+url, callback, request_timeout=request_timeout, **kwargs)
 
 if __name__ == '__main__':
