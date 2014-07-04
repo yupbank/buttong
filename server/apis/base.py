@@ -18,6 +18,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
 
 class ApiHandler(BaseHandler):
-    def finish(self, data):
+    def write(self, data):
         self.set_header("Content-Type", "application/xml; charset=UTF-8")
-        return super(ApiHandler, self).finish(data)
+        return super(ApiHandler, self).write(data)

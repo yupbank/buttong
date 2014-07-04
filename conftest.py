@@ -15,18 +15,20 @@ from server.util import valid
 from server.ctrl import router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text, return_back, subscribe
 from server.app import application
 
-@pytest.fixture(scope="module", params=[['text', 'how'], ['text', 'q:wa'], ['event', 'subscribe'], ['event', 'unsubscribe']])
+@pytest.fixture(scope="function", params=[['text', 'how'], ['event', 'subscribe'], ['event', 'unsubscribe'],['text', 'q:wa']])
 def xml(request):
-    _type, mes = request.param
-    msgtype = 'Event' if _type == 'event' else 'MsgType'
     s = """<xml>
     <ToUserName><![CDATA[rec]]></ToUserName>
     <FromUserName><![CDATA[sender]]></FromUserName>
     <CreateTime>1232322</CreateTime>
+    <MsgType><![CDATA[%s]]></MsgType>
     <%s><![CDATA[%s]]></%s>
-    <Content><![CDATA[%s]]></Content>
-    </xml>"""%(msgtype, mes, msgtype, _type)
-    return s
+    </xml>"""
+    _type, mes = request.param
+    if _type == 'event':
+        return s%('event', 'Event', mes, 'Event')
+    elif _type == 'text':
+        return s%('text', 'Content', mes, 'Content')
 
 
 

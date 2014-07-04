@@ -8,7 +8,6 @@ Email:  yupbank@gmail.com
 Created on
 2014-07-03
 '''
-from functools import partial
 
 from settings import help_message, welcome_message
 from util import form_message, toDict
@@ -45,7 +44,7 @@ def subscribe(xdict):
     message = welcome_message+'\n'+help_message 
     return message
 
-def router(xdict, callback):
+def router(xdict):
     return_message = None
     message_type = get_messeage_type(xdict)
     if is_event(message_type):
@@ -59,22 +58,24 @@ def router(xdict, callback):
         if is_help(text):
             return_message = help_message
         elif is_query(text):
-            query(text, xdict, callback)
-            return None
+            return text
         else:
             return_message = text
     return return_message
 
 def query(text, xdict, callback):
     query_text = text.strip('q:')
+    print query_text
     suggestion(query_text, partial(callback, xdict))
 
 
 def unsubscribe(xdict):
     return None
 
-def return_back(xdict, callback):
-    return_message = router(xdict, callback)
-    if return_message:
-        return form_message(xdict, return_message)
+def return_back(xdict):
+    return_message = router(xdict)
+    if return_message and not is_query(return_message):
+        return form_message(xdict, return_message), xdict
+    else:
+        return return_message, xdict
 

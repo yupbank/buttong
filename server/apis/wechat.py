@@ -15,7 +15,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from .base import ApiHandler
 from util import valid, toDict, form_message
-from ctrl import return_back
+from ctrl import return_back, is_query
+from search import suggestion
+from functools import partial
 import tornado.web
 
 class WechatHandler(ApiHandler):
@@ -38,11 +40,17 @@ class WechatHandler(ApiHandler):
         data = self.request.body
         if valid(signature, timestamp, nonce):
             message = toDict(data)
-            message = return_back(message, self.callback)
-            return self.finish(message or 'None')
+            message, xdict = return_back(message)
+            if message and not is_query(message):
+                return self.finish(message)
+            elif is_query(message):
+                suggestion(message[3:].strip(), partial(self.callback, xdict))
+            else:
+                return self.finish('not valid')
+
         else:
             return self.finish('not valid')
 
     def callback(self, xdict, message):
-        form_message(xdict, message)
-        return self.finish(message)
+        new_message = form_message(xdict, message.body)
+        return self.finish(new_message)

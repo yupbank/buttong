@@ -10,6 +10,7 @@ Created on
 '''
 from .framework import HTTPClientMixin
 from tornado.testing import AsyncHTTPTestCase
+import tornado
 from ..conftest import application
 import pytest
 from urllib import urlencode
@@ -26,6 +27,10 @@ def test_xml(xml):
     t_xml = xml
 
 class ApplicationTestCase(AsyncHTTPTestCase, HTTPClientMixin):
+    def get_new_ioloop(self):
+        print 'vistied....'
+        return tornado.ioloop.IOLoop.instance()
+
     def get_app(self):
         return  application
 
@@ -54,6 +59,8 @@ class ApplicationTestCase(AsyncHTTPTestCase, HTTPClientMixin):
         else:
             url += '?%s' % data
         response = self.post(url, t_xml)
-        print response.body
-        #self.assertTrue('how' in response.body or 'help' in response.body)
+        if 'q:wa' in t_xml:
+            print response.body, '!!!'
+        if not 'unsubscribe' in t_xml and 'q:' not in t_xml:
+            self.assertTrue('how' in response.body or 'help' in response.body)
 

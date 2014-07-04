@@ -31,7 +31,7 @@ class HTTPClientMixin(BaseTestCase):
            if isinstance(data, dict):
                data = urlencode(data)
        return self._fetch(url, 'POST', data, headers, **kwargs)
-
+   
    def _fetch(self, url, method, data=None, headers=None, **kwargs):
        self.http_client.fetch(self.get_url(url), self.stop, method=method,
                               body=data, headers=headers, **kwargs)

@@ -20,9 +20,6 @@ class TestMessage(BaseTestCase):
         assert result
 
     def test_messgae(self, message):
-        def func(a):
-            pass
-
         message_body, message_type = message
         _message_type = get_messeage_type(message_body)
         event_type, text = None, None
@@ -35,7 +32,7 @@ class TestMessage(BaseTestCase):
             assert is_text_message(_message_type)
             text = get_text(message_body)
 
-        return_message = router(message_body, func)
+        return_message = router(message_body)
         if event_type:
             if is_subscibe(event_type):
                 assert return_message == subscribe(message_body) 
@@ -50,9 +47,7 @@ class TestMessage(BaseTestCase):
 
     def test_return_back(self, message):
         message_body, message_type = message
-        def callback(*args):
-            return args
         if is_event(message_type):
-            assert 'help' in return_back(message_body, callback)
+            assert 'help' in return_back(message_body)[0]
         if is_text_message(message_type):
-            assert 'text' in return_back(message_body, callback)
+            assert 'Msg' in return_back(message_body)[0]

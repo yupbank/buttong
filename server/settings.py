@@ -14,7 +14,7 @@ setting = {
         }
 
 API_BASE = 'http://hkbus.axon-labs.com/api'
-SUGGETION = '/search/suggestion?q=%s'
+SUGGETION = '/search/suggestions?q=%s'
 UUID = '888'
 TOKEN = 'bustong2014' # 微信公众号 TOKEN
 
