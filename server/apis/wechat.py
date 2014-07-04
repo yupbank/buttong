@@ -8,6 +8,10 @@ Email:  yupbank@gmail.com
 Created on
 2014-07-03
 '''
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from .base import ApiHandler
 from util import valid, toDict, form_message
