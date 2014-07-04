@@ -10,7 +10,7 @@
     3, hook up with nearby friend.
 
 ##useful link
-    1, [![bus api](http://hkbus.axon-labs.com/api/admin)] provide by axon labs
+    1, [bus api](http://hkbus.axon-labs.com/api/admin) provide by axon labs
 
 ##Thanks to
 
