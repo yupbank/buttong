@@ -41,6 +41,10 @@ def is_help(text):
 def is_query(text):
     return text.strip().lower().startswith('q:')
 
+def subscribe(xdict):
+    message = welcome_message+'\n'+help_message 
+    return message
+
 def router(xdict, callback):
     return_message = None
     message_type = get_messeage_type(xdict)
@@ -65,9 +69,6 @@ def query(text, xdict, callback):
     query_text = text.strip('q:')
     suggestion(query_text, partial(callback, xdict))
 
-def subscribe(xdict):
-    message = welcome_message+'\n'+help_message 
-    return message
 
 def unsubscribe(xdict):
     return None

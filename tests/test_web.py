@@ -8,15 +8,52 @@ Email:  yupbank@gmail.com
 Created on
 2014-07-03
 '''
+from .framework import HTTPClientMixin
 from tornado.testing import AsyncHTTPTestCase
 from ..conftest import application
+import pytest
+from urllib import urlencode
 
-class ApplicationTestCase(AsyncHTTPTestCase):
+
+t_data = None
+t_xml = None
+def test_data(data_fortest):
+    global t_data
+    t_data = data_fortest
+
+def test_xml(xml):
+    global t_xml
+    t_xml = xml
+
+class ApplicationTestCase(AsyncHTTPTestCase, HTTPClientMixin):
     def get_app(self):
         return  application
 
     def test_homepage(self):
         url = '/'
-        self.http_client.fetch(self.get_url(url), self.stop)
-        response = self.wait()
+        response = self.get(url)
         self.assertTrue('welcome' in response.body)
+    
+    def test_get_webchat(self):
+        echo_strs = ['text', 'event', u'中文恩']
+        url = '/wechat'
+        for echo in echo_strs:
+            echo = echo.encode('U8')
+            data = t_data
+            data.update({'echostr':echo})
+            response = self.get(url, data=data)
+            self.assertTrue(echo in response.body)
+
+    def test_post_wechat(self):
+        data = t_data
+        url = '/wechat'
+        if isinstance(data, dict):
+            data = urlencode(data)
+        if '?' in url:
+            url += '&amp;%s' % data
+        else:
+            url += '?%s' % data
+        response = self.post(url, t_xml)
+        print response.body
+        #self.assertTrue('how' in response.body or 'help' in response.body)
+

@@ -27,7 +27,8 @@ class WechatHandler(ApiHandler):
         nonce =  self.get_argument('nonce', None)
         echo_str = self.get_argument('echostr', None)
         if valid(signature, timestamp, nonce):
-            self.finish(echo_str or ' ')
+            print self.request.body
+            return self.finish(echo_str or ' ')
 
     @tornado.web.asynchronous
     def post(self):
@@ -38,8 +39,9 @@ class WechatHandler(ApiHandler):
         if valid(signature, timestamp, nonce):
             message = toDict(data)
             message = return_back(message, self.callback)
-            if message:
-                return self.finish(message)
+            return self.finish(message or 'None')
+        else:
+            return self.finish('not valid')
 
     def callback(self, xdict, message):
         form_message(xdict, message)

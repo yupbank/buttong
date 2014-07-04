@@ -52,6 +52,6 @@ def form_message(xdict, message):
     kw['ToUserName'] = xdict['FromUserName']
     kw['FromUserName'] = xdict['ToUserName']
     kw['CreateTime'] = int(time.time())
-    kw['Content'] = return_message
+    kw['Content'] = message
     return toXml(kw)
 

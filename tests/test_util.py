@@ -9,9 +9,16 @@ Created on
 2014-07-03
 '''
 from .framework import BaseTestCase
-from ..conftest import valid, router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text
+from ..conftest import valid, router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text, return_back, subscribe
 
 class TestMessage(BaseTestCase):
+    def test_valid(self, data_fortest):
+        signature = data_fortest['signature']
+        timestamp = data_fortest['timestamp']
+        nonce = data_fortest['nonce']
+        result = valid(signature, timestamp, nonce)
+        assert result
+
     def test_messgae(self, message):
         def func(a):
             pass
@@ -41,3 +48,11 @@ class TestMessage(BaseTestCase):
             if is_query(text):
                 assert return_message is None
 
+    def test_return_back(self, message):
+        message_body, message_type = message
+        def callback(*args):
+            return args
+        if is_event(message_type):
+            assert 'help' in return_back(message_body, callback)
+        if is_text_message(message_type):
+            assert 'text' in return_back(message_body, callback)
