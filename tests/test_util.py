@@ -9,7 +9,7 @@ Created on
 2014-07-03
 '''
 from .framework import BaseTestCase
-from ..conftest import valid, router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text, return_back, subscribe
+from ..conftest import valid, router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text, return_back, subscribe, ensure_tradition, ensure_simple
 
 class TestMessage(BaseTestCase):
     def test_valid(self, data_fortest):
@@ -51,3 +51,11 @@ class TestMessage(BaseTestCase):
             assert 'help' in return_back(message_body)[0]
         if is_text_message(message_type):
             assert 'Msg' in return_back(message_body)[0]
+
+
+    def test_ensure_tradition(self):
+        base = [(u'中环', u'中環'), (u'旺角', u'旺角')]
+        for word1, word2 in base:
+            new_word = ensure_tradition(word1)
+            assert word2 == new_word
+

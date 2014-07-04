@@ -19,6 +19,7 @@ from ctrl import return_back, is_query
 from search import suggestion
 from functools import partial
 import tornado.web
+import json
 
 class WechatHandler(ApiHandler):
     url_path = '/wechat'
@@ -44,7 +45,7 @@ class WechatHandler(ApiHandler):
             if message and not is_query(message):
                 return self.finish(message)
             elif is_query(message):
-                suggestion(message[3:].strip(), partial(self.callback, xdict))
+                suggestion(message[2:].strip(), partial(self.callback, xdict))
             else:
                 return self.finish('not valid')
 
@@ -52,5 +53,5 @@ class WechatHandler(ApiHandler):
             return self.finish('not valid')
 
     def callback(self, xdict, message):
-        new_message = form_message(xdict, message.body)
+        new_message = form_message(xdict, json.loads(message.body)['data'][0]['suggestion'])
         return self.finish(new_message)

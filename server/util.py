@@ -13,9 +13,26 @@ from hashlib import sha1
 import string
 from zh_wiki import zh2Hant, zh2Hans
 
-ensure_tradition = lambda x: ''.join(map(lambda y: zh2Hant.get(y, y), x))
+newzh2hant, newzh2hans = {}, {}
 
-ensure_simple = lambda x: ''.join(map(lambda y: zh2Hans.get(y, y), x))
+for j, k in zh2Hant.iteritems():
+    new_j = j.decode('u8')
+    new_k = k.decode('u8')
+    newzh2hant[new_j] = new_k
+
+for j, k in zh2Hans.iteritems():
+    new_j = j.decode('u8')
+    new_k = j.decode('u8')
+    newzh2hans[new_j] = new_k
+
+def ensure_tradition(words):
+    res = u''
+    for word in words:
+        res += newzh2hant.get(word, word)
+    return res
+        
+
+ensure_simple = lambda x: u''.join(map(lambda y: newzh2hans.get(y, y), x))
 
 
 try:

@@ -61,6 +61,7 @@ class ApplicationTestCase(AsyncHTTPTestCase, HTTPClientMixin):
         response = self.post(url, t_xml)
         if 'q:' in t_xml:
             print response.body, '!!!'
+            self.assertTrue('status' in response.body)
         if not 'unsubscribe' in t_xml and 'q:' not in t_xml:
             self.assertTrue('how' in response.body or 'help' in response.body)
-
+    

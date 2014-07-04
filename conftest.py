@@ -11,7 +11,7 @@ Created on
 import time
 import pytest
 
-from server.util import valid
+from server.util import valid, ensure_tradition, ensure_simple
 from server.ctrl import router, is_event, is_text_message, is_subscibe, is_unsubscibe, is_help, is_query, get_messeage_type, get_event_type, get_text, return_back, subscribe
 from server.app import application
 
